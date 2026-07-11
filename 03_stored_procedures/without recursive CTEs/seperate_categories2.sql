@@ -1,5 +1,5 @@
 -- procedure to seperate categories table and categories_shows
-drop procedure if exists seperate_categories;
+drop procedure if exists seperate_categories2;
 
 /*
 	tables:
@@ -10,7 +10,7 @@ drop procedure if exists seperate_categories;
 */
 
 delimiter $$
-create procedure seperate_categories()
+create procedure seperate_categories2 ()
 begin 
 	declare buff varchar(500); 					-- this is where we save the category we isolate from the column 
 	declare element_cnt int;  					-- counter for the amount of elements in the column 

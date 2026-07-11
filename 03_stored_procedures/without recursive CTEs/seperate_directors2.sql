@@ -1,5 +1,5 @@
 -- procedure to seperate directors table and directos_shows
-drop procedure if exists seperate_directors;    
+drop procedure if exists seperate_directors2;    
 
 /*
 	tables:
@@ -10,7 +10,7 @@ drop procedure if exists seperate_directors;
 */
 
 delimiter $$
-create procedure seperate_directors ()
+create procedure seperate_directors2 ()
 begin 
 	declare buff varchar(1000); 				-- this is where we save the director we isolate from the column 
 	declare element_cnt int;  					-- counter for the amount of elements in the column 

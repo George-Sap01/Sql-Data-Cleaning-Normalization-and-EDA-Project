@@ -1,5 +1,5 @@
 -- procedure to seperate actors table and actors_shows
-drop procedure if exists seperate_actors;    
+drop procedure if exists seperate_actors2;    
 
 /*
 	tables i use:
@@ -10,7 +10,7 @@ drop procedure if exists seperate_actors;
 */
 
 delimiter $$
-create procedure seperate_actors ()
+create procedure seperate_actors2 ()
 begin 
 	declare buff varchar(1000); 				-- this is where we save the actor we isolate from the column 
 	declare element_cnt int;  					-- counter for the amount of elements in the column 

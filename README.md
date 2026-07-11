@@ -18,7 +18,7 @@ Netflix is one of the world's most popular media streaming platforms. This datas
 ### Relational Database Normalization (3NF)
 
 #### Automation via Stored Procedures:
-I engineered native **MySQL Stored Procedures** to handle the ETL process. These use custom looping blocks and procedural string parsing (`SUBSTRING_INDEX`) to dynamically extract multi-valued attributes into their respective tables without manual intervention.
+I engineered native **MySQL Stored Procedures** to handle the ETL process. These use custom **recursive CTEs** and procedural string parsing (`SUBSTRING_INDEX`) to dynamically extract multi-valued attributes into their respective tables without manual intervention.
 
 **Example: Splitting the original table into two main tables connected through an intermediate table**
 
@@ -76,7 +76,7 @@ I engineered native **MySQL Stored Procedures** to handle the ETL process. These
 ## Technologies Used
 
 - MySQL
-- SQL (Joins, CTEs, Window Functions, Aggregations, Stored Procedures)
+- SQL (Joins, CTEs, Recursive CTEs, Window Functions, Aggregations, Stored Procedures)
 - Database Normalization
 - Data Cleaning
 - Exploratory Data Analysis (EDA)

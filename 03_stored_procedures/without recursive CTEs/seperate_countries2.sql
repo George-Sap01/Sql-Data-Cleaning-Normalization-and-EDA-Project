@@ -1,5 +1,5 @@
 -- procedure to seperate countries table and countries_shows
-drop procedure if exists seperate_countries;    
+drop procedure if exists seperate_countries2;    
 
 /*
 	tables:
@@ -10,7 +10,7 @@ drop procedure if exists seperate_countries;
 */
 
 delimiter $$
-create procedure seperate_countries ()
+create procedure seperate_countries2 ()
 begin 
 	declare buff varchar(500); 					-- this is where we save the country we isolate from the column 
 	declare element_cnt int;  					-- counter for the amount of elements in the column 
