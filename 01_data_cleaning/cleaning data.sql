@@ -73,7 +73,6 @@ order by title;
 select count(director) from netflix_titles where director is NULL or director = '';
 -- 2634 MISSING VALUES in the director column
  
- select director from netflix_titles where director regexp '^,|,$|[0-9]!@#$%^&*()';
  
  update cnet 
  set director = 'Unknown'
@@ -82,8 +81,6 @@ select count(director) from netflix_titles where director is NULL or director = 
 /* 			CAST 			*/
 select count(cast) from netflix_titles where cast is NULL or cast = '';
 -- 825 MISSING VALUES in the cast column 
-
-select cast from cnet where cast regexp '^,|,$|[0-9]!@#$%^&*()-=+';
 
 update cnet 
 set cast = 'Unknown'
@@ -94,7 +91,6 @@ where cast is Null or cast = '';
 select count(country) from netflix_titles where country is NULL or country = '';
 -- 831 MISSING VALUES in the country column 
 
-select country from netflix_titles where country regexp '^,|,$|[0-9]!@#$%^&*()';
 
 update cnet 
 set country = 'Unknown'
