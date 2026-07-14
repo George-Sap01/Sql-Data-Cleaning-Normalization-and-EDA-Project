@@ -1,4 +1,4 @@
-# MySql Data Cleaning, Normalization and EDA Project
+# SQL Data Cleaning, Normalization and EDA Project
 
 ## Purpose of the project
 The purpose of this project is to demonstrate my ***data cleaning***, ***database normalization***, and ***exploratory data analysis (EDA)*** skills using a Netflix dataset
@@ -6,80 +6,62 @@ The purpose of this project is to demonstrate my ***data cleaning***, ***databas
 ##  Dataset
 Netflix is one of the world's most popular media streaming platforms. This dataset contains over 8,000 movies and TV shows that were available on Netflix as of mid-2021. It includes information such as cast members, directors, ratings, release year, duration, genres, and more.
 
+## Notes on the Raw Data
+The original dataset was imported as a single, un-normalized flat table. This structure suffered from several issues:
 
-## Part 1
-### Importing and cleaning data
-* String Standardization: Used Regular Expressions (`REGEXP`) to clean up syntax anomalies, such as trailing or leading commas in textual data arrays
-* Identified and systematically handled missing data across fields by replacing blanks/nulls with standard (`Unknown`) identifiers
-* Remove unnecessary columns and rows
-* Type Casting: Refactored raw text-based date fields into native SQL DATE types using `STR_TO_DATE`
+* **Multi-valued Attributes**: Columns like `director` , `cast`, `country`, and `listed_in` contained comma-separated lists of values within a single cell, violating the First Normal Form (1NF).
 
-## Part 2
-### Relational Database Normalization (3NF)
+* **Missing Data**: Many rows had blank or NULL entries across key attributes.
 
-#### Automation via Stored Procedures:
-I engineered native **MySQL Stored Procedures** to handle the ETL process. These use custom **recursive CTEs** and procedural string parsing (`SUBSTRING_INDEX`) to dynamically extract multi-valued attributes into their respective tables without manual intervention.
+* **Inconsistent Types**: The `date_added` field was stored as text strings (e.g., "September 25, 2021") instead of a proper `DATE` format.
 
-**Example: Splitting the original table into two main tables connected through an intermediate table**
+## Part 1: Data Cleaning & Standardizing
+* **Type Conversion**: Text-based dates were converted into a standardized `YYYY-MM-DD` format using `STR_TO_DATE`. Missing dates default to `1900-01-01`.
 
-|Name   | Skills|
-|------ | ------|
-|George | C++, Python, Java|
-|Bob    | Python, C++|      
+* **Column Modification**: The `show_id` column was converted to an integer auto-incrementing *Primary Key* (id). Unused columns like rating were dropped.
 
-<table>
-<tr>
-<td valign="top">
+* **Handling Missing Values**: Missing strings in `director`, `cast`, and `country` were populated with "`Unknown`"
 
-|id     | Name  |
-|------ | ------|
-|1      | George|
-|2      | Bob   |      
+* **String Standardization**: Used Regular Expressions (`REGEXP`) to clean up syntax anomalies, such as trailing or leading commas in textual data arrays
+  
 
-</td>
-<td valign="top">
+## Part 2: Schema Splitting & Normalization
+### Automation via Stored Procedures:
+I engineered native **MySQL Stored Procedures** to handle the ETL process. These use custom recursive CTEs and procedural string parsing (`SUBSTRING_INDEX`) to dynamically extract multi-valued attributes into their respective tables without manual intervention.
+
+The schema was normalized up to **Third Normal Form** (3NF).
+
+    shows
+    ├── actors_shows ───── actors
+    ├── directors_shows ── directors
+    ├── countries_shows ── countries
+    └── categories_shows ─ categories
 
 
-| Name_id | Skill_id |
-|-------- | -------- |
-| 1       | 1  |
-| 1       | 2  |
-| 1       | 3  |
-| 2       | 1  |
-| 2       | 2  |
-
-</td>
-<td valign="top">
-
-| id  | Skill |
-|-----|-------|
-| 1   | Python|
-| 2   | C++   |
-| 3   | Java  |
-</tr>
-</table>
-
-## Part 3
-### Exploratory Data Analysis
+## Part 3: Exploratory Data Analysis
 * Top 10 Actors with the Most Appearances in Movies and TV Series
     * Directors Who Have Worked with Them
 * Number of Movies Added Each Year (2008–2021) 
 * Number of Movies Added per Calendar Season (2008–2021)
-* Top Three Most Popular Movie/TV Series Categories for Each Season
+* Top 3 Categories by Season
 * Average Movie Runtime
 * Average Number of Seasons per TV Series (With and Without Outliers)
 * Distribution of TV Series Seasons
-* Ditribution of Movie runtimes
+* Distribution of Movie Runtimes
   * Dynamic Runtime Binning: Implemented a customizable bucket distribution system using a stored procedure to analyze movie runtimes across adjustable minute intervals (20-minute steps, 10-minute steps, 5-minute steps)
 
 
 ## Technologies Used
 
 - MySQL
-- SQL (Joins, CTEs, Recursive CTEs, Window Functions, Aggregations, Stored Procedures)
-- Database Normalization
+- Recursive CTEs
+- Stored Procedures
+- Window Functions
+- Database Design (3NF)
+- ETL Pipelines
 - Data Cleaning
-- Exploratory Data Analysis (EDA)
+- Exploratory Data Analysis
+- Outlier Detection (`IQR Method`)
 
 ## Reference 
 Dataset Source: <https://www.kaggle.com/datasets/shivamb/netflix-shows>
